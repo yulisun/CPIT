@@ -24,20 +24,11 @@ fprintf([ '=====================================================================
 
 %% Displaying results
 fprintf(['\n Displaying the results...... ' '\n'])
-Im_t1_hist = imhistmatch(uint8(Im_t1),image_t2);
-Im_t2_hist = imhistmatch(uint8(Im_t2),image_t1);
 
-if strcmp(dataset,'dataset#4') ~= 1
-    figure;
-    subplot(241);imshow(image_t2);title('original imgt2')
-    subplot(242);imshow(uint8(Im_t1));title('transformed imgt2')
-    subplot(243);imshow(Im_t1_hist);title('transformed imgt2')
-    subplot(244);imshow(remove_outlier(DI_t1),[]);title('forward DI')
-    subplot(245);imshow((image_t1));title('original imgt1')
-    subplot(246);imshow(uint8(Im_t2));title('transformed imgt1')
-    subplot(247);imshow(Im_t2_hist);title('transformed imgt1')
-    subplot(248);imshow(remove_outlier(DI_t2),[]);title('backward DI')
-end
+figure;
+subplot(131);imshow(remove_outlier(DI_t1),[]);title('forward DI')
+subplot(132);imshow(remove_outlier(DI_t2),[]);title('backward DI')
+subplot(133);imshow(CM);title('change map')
 
 [Precision_forward, Recall_forward]= PR_plot(DI_t1,Ref_gt,500);
 [Precision_backward, Recall_backward]= PR_plot(DI_t2,Ref_gt,500);
@@ -51,7 +42,4 @@ fprintf(result_DI,AUP_forward,AUP_backward)
 F1 = 2*tp/(2*tp + fp + fn);
 result_CM = 'CM: OA is %4.3f; kappa is %4.3f; F1 is %4.3f \n';
 fprintf(result_CM,OA,kappa,F1)
-figure;
-subplot(131);imshow(remove_outlier(DI_t1),[]);title('forward DI')
-subplot(132);imshow(remove_outlier(DI_t2),[]);title('backward DI')
-subplot(133);imshow(CM);title('change map')
+
