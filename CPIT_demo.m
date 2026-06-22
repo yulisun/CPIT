@@ -6,26 +6,29 @@ addpath(genpath(pwd));
 dataset = 'dataset#1';
 Load_dataset % For other datasets, we recommend a similar pre-processing as in "Load_dataset"
 fprintf(['\n Data loading is completed...... ' '\n'])
+
 %% Parameter setting
 % With different parameter settings, the results will be a little different
 % Ns: the number of superpxiels,  Ns = 2500 is recommended.
 opt.Ns = 2500;
 opt.Niter = 20;
 opt.N_inner = 10;
-%% DI
+
+%% CPIT
 fprintf(['\n CPIT is running...... ' '\n'])
 time = clock;
 [Im_t1,DI_t1,delt_t1,Im_t2,DI_t2,delt_t2,CM] = CPIT_main(image_t1,image_t2,opt);
 fprintf(['\n' '====================================================================== ' ])
 fprintf('\n');fprintf('The total computational time of CPIT is %i \n' ,etime(clock,time));
 fprintf([ '====================================================================== ' ])
+
 %% Displaying results
 fprintf(['\n Displaying the results...... ' '\n'])
 Im_t1_hist = imhistmatch(uint8(Im_t1),image_t2);
 Im_t2_hist = imhistmatch(uint8(Im_t2),image_t1);
 
-figure;
 if strcmp(dataset,'dataset#4') ~= 1
+    figure;
     subplot(241);imshow(image_t2);title('original imgt2')
     subplot(242);imshow(uint8(Im_t1));title('transformed imgt2')
     subplot(243);imshow(Im_t1_hist);title('transformed imgt2')
@@ -52,5 +55,3 @@ figure;
 subplot(131);imshow(remove_outlier(DI_t1),[]);title('forward DI')
 subplot(132);imshow(remove_outlier(DI_t2),[]);title('backward DI')
 subplot(133);imshow(CM);title('change map')
-%%
-
