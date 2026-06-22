@@ -8,7 +8,6 @@ Kn = opt.kmax;
 Kf = opt.kF;
 idx_att = idx(:,1:Kn);
 idx_rep = fliplr(idx(:,end-Kf+1:end));
-%%
 for i = 1:N
     id_x = idx_att(i,1:Kn);
     di = distX(i,1:Kn);
