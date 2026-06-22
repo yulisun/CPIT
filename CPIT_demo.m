@@ -30,6 +30,13 @@ subplot(131);imshow(remove_outlier(DI_t1),[]);title('forward DI')
 subplot(132);imshow(remove_outlier(DI_t2),[]);title('backward DI')
 subplot(133);imshow(CM);title('change map')
 
+[Precision_forward, Recall_forward]= PR_plot(DI_t1,Ref_gt,500);
+[Precision_backward, Recall_backward]= PR_plot(DI_t2,Ref_gt,500);
+[AUP_forward,~] = AUC_Diagdistance(Precision_forward, Recall_forward);
+[AUP_backward,~] = AUC_Diagdistance(Precision_backward, Recall_backward);
+result_DI = 'DI: forward AUP is %4.3f; backward AUP is %4.3f \n';
+fprintf(result_DI,AUP_forward,AUP_backward)
+
 [tp,fp,tn,fn,fplv,fnlv,~,~,OA,kappa,imw]=performance(CM,Ref_gt);
 F1 = 2*tp/(2*tp + fp + fn);
 result_CM = 'CM: OA is %4.3f; kappa is %4.3f; F1 is %4.3f \n';
